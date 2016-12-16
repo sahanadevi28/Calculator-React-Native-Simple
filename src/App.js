@@ -15,7 +15,9 @@ export default class App extends React.Component {
       result:10,
       formula:"5*2",
     }
-
+    this.onPressOperatorOrNumber=this.onPressOperatorOrNumber.bind(this);
+    this.onPressSubmitResult = this.onPressSubmitResult.bind(this);
+    this.backspaceOperator= this.backspaceOperator.bind(this);
   }
   onPressOperatorOrNumber=(symbol)=>{
     this.setState({
@@ -31,7 +33,7 @@ export default class App extends React.Component {
       alert("Input wrong.")
     }
   }
-  backspaceOperator(){
+  backspaceOperator=()=>{
     this.setState({
       formula:this.state.formula.slice(0,this.state.formula.length-1)
     })
@@ -52,7 +54,7 @@ export default class App extends React.Component {
                   <Text style={styles.formulaText}>
                     {this.state.formula}
                   </Text>
-                  <Icon name={"ios-backspace"} style={{color:'white',marginRight:16}} size={40} onPress={()=>this.backspaceOperator()}/>
+                  <Icon name={"ios-backspace"} style={{color:'white',marginRight:16}} size={40} onPress={this.backspaceOperator}/>
               </View>
             </View>
             <View style={styles.row}>
@@ -81,7 +83,7 @@ export default class App extends React.Component {
               <Button  style={styles.buttonNumber} onPress={()=>{this.onPressOperatorOrNumber("0")}} title="0"/>
               <Button  style={styles.buttonNumber} onPress={()=>{this.onPressOperatorOrNumber("00")}} title="00"/>
               <Button  style={styles.buttonNumber} onPress={()=>{this.onPressOperatorOrNumber(".")}} title="."/>
-              <Button  style={[styles.buttonNumber,{backgroundColor:'#4aa7ff'}]} titleStyle = {{color:'white'}} onPress={()=>{this.onPressSubmitResult()}} title="="/>
+              <Button  style={[styles.buttonNumber,{backgroundColor:'#4aa7ff'}]} titleStyle = {{color:'white'}} onPress={this.onPressSubmitResult} title="="/>
             </View>
           </View>
         </View>
