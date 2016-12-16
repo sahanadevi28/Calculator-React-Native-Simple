@@ -22,19 +22,19 @@ export default class MyCalculator extends Component {
       dismissKeyboard();
       this.state={
         result:10,
-        operation:"5*2",
+        formula:"5*2",
       }
     }
     onPressOperatorOrNumber(symbol){
-      this.setState({
-        operation:this.state.operation+symbol
-      })
+      setTimeout(()=>this.setState({
+        formula:this.state.formula+symbol
+      }),50)
     }
     onPressSubmitResult(){
       try{
-        eval(this.state.operation)
+        eval(this.state.formula)
         this.setState({
-          result:eval(this.state.operation)
+          result:eval(this.state.formula)
         })
       }catch(e){
         alert("Input wrong.")
@@ -43,7 +43,7 @@ export default class MyCalculator extends Component {
     }
     backspaceOperator(){
       this.setState({
-        operation:this.state.operation.slice(0,this.state.operation.length-1)
+        formula:this.state.formula.slice(0,this.state.formula.length-1)
       })
     }
     getResult(){
@@ -62,14 +62,14 @@ export default class MyCalculator extends Component {
           <View style={{flex:1,flexDirection:'column',justifyContent:'flex-end'}}>
             <View style={{flex:1,backgroundColor:'#494949'}}>
               <View style={{flex:1,alignItems:'center',flexDirection:'row'}}>
-                  <Text style={styles.operationText}>
-                    {this.state.operation}
+                  <Text style={styles.formulaText}>
+                    {this.state.formula}
                   </Text>
-                  <Icon name={"ios-backspace"} style={{color:'white',marginRight:16}} size={30} onPress={()=>this.backspaceOperator()}/>
+                  <Icon name={"ios-backspace"} style={{color:'white',marginRight:16}} size={40} onPress={()=>this.backspaceOperator()}/>
               </View>
             </View>
             <View style={styles.row}>
-              <Button block large warning style={[styles.button,{flex:3.43}]} onPress={()=>{this.setState({operation:""})}} >AC</Button>
+              <Button block large warning style={[styles.button,{flex:3.43}]} onPress={()=>{this.setState({formula:""})}} >AC</Button>
               <Button block large style={styles.button} onPress={()=>{this.onPressOperatorOrNumber("/")}} >/</Button>
             </View>
             <View style={styles.row}>
@@ -134,7 +134,7 @@ const styles = EStyleSheet.create({
   textButton:{
     color:'black',
   },
-  operationText:{
+  formulaText:{
     flex:1,
     color:'white',
     textAlign :'right',
