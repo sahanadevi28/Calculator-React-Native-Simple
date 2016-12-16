@@ -15,9 +15,6 @@ export default class App extends React.Component {
       result:10,
       formula:"5*2",
     }
-    this.onPressOperatorOrNumber=this.onPressOperatorOrNumber.bind(this);
-    this.onPressSubmitResult = this.onPressSubmitResult.bind(this);
-    this.backspaceOperator= this.backspaceOperator.bind(this);
   }
   onPressOperatorOrNumber=(symbol)=>{
     this.setState({
