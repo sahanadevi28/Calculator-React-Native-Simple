@@ -7,13 +7,23 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-export default class Button extends React.Component {
+// import shallowCompare from 'shallowequal';
+import shallowCompare from 'react-addons-shallow-compare';
+
+export default class Button extends React.PureComponent {
   constructor(props) {
     super(props);
   }
-  render() {
+
+ onPress=()=>{
+   const {onPress,title} = this.props;
+   if (onPress) {
+    onPress(title);
+  }
+ }
+render() {
     return (
-      <TouchableHighlight onPress={()=>{this.props.onPress&&this.props.onPress()}} style={[styles.container,this.props.style]} underlayColor={this.props.underlayColor||'#d1d1d1'}>
+      <TouchableHighlight onPress={this.onPress} style={[styles.container,this.props.style]} underlayColor={this.props.underlayColor||'#d1d1d1'}>
         <Text style={[styles.title,this.props.titleStyle]}>
             {this.props.title}
         </Text>

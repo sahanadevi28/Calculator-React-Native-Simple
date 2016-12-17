@@ -8,13 +8,14 @@ import {
   View,
   TouchableHighlight,
 } from 'react-native';
-export default class App extends React.Component {
+export default class App extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state={
       result:10,
       formula:"5*2",
     }
+    this.onPressOperatorOrNumber = this.onPressOperatorOrNumber.bind(this)
   }
   onPressOperatorOrNumber=(symbol)=>{
     this.setState({
@@ -35,6 +36,9 @@ export default class App extends React.Component {
       formula:this.state.formula.slice(0,this.state.formula.length-1)
     })
   }
+  onPressACButton=()=>{
+    this.setState({formula:""})
+  }
   render() {
     return (
         <View style={{flex:1}}>
@@ -51,36 +55,36 @@ export default class App extends React.Component {
                   <Text style={styles.formulaText}>
                     {this.state.formula}
                   </Text>
-                  <Icon name={"ios-backspace"} style={{color:'white',marginRight:16}} size={40} onPress={this.backspaceOperator}/>
+                  <Icon name={"ios-backspace"} style={styles.iconStyle} size={40} onPress={this.backspaceOperator}/>
               </View>
             </View>
             <View style={styles.row}>
-            <Button  style={[styles.buttonNumber,{flex:3,backgroundColor:'#2b79c2'}]} titleStyle = {{color:'white'}} onPress={()=>{this.setState({formula:""})}} title="AC"/>
-              <Button  style={styles.operation} titleStyle = {{color:'white'}} onPress={()=>{this.onPressOperatorOrNumber("/")}} title="/"/>
+            <Button  style={styles.ACbutton} titleStyle ={styles.titleOperationStyle} onPress={this.onPressACButton} title="AC"/>
+            <Button  style={styles.operation} titleStyle = {styles.titleOperationStyle} onPress={this.onPressOperatorOrNumber} title="/"/>
             </View>
             <View style={styles.row}>
-              <Button  style={styles.buttonNumber} onPress={()=>{this.onPressOperatorOrNumber("1")}} title="1"/>
-              <Button  style={styles.buttonNumber} onPress={()=>{this.onPressOperatorOrNumber("2")}} title="2"/>
-              <Button  style={styles.buttonNumber} onPress={()=>{this.onPressOperatorOrNumber("3")}} title="3"/>
-              <Button  style={styles.operation} titleStyle = {{color:'white'}} onPress={()=>{this.onPressOperatorOrNumber("*")}} title="X"/>
+              <Button  style={styles.buttonNumber} onPress={this.onPressOperatorOrNumber} title="1"/>
+              <Button  style={styles.buttonNumber} onPress={this.onPressOperatorOrNumber} title="2"/>
+              <Button  style={styles.buttonNumber} onPress={this.onPressOperatorOrNumber} title="3"/>
+              <Button  style={styles.operation} titleStyle = {styles.titleOperationStyle} onPress={this.onPressOperatorOrNumber} title="X"/>
             </View>
             <View style={styles.row}>
-              <Button  style={styles.buttonNumber} onPress={()=>{this.onPressOperatorOrNumber("4")}} title="4"/>
-              <Button  style={styles.buttonNumber} onPress={()=>{this.onPressOperatorOrNumber("5")}} title="5"/>
-              <Button  style={styles.buttonNumber} onPress={()=>{this.onPressOperatorOrNumber("6")}} title="6"/>
-              <Button  style={styles.operation} titleStyle = {{color:'white'}} onPress={()=>{this.onPressOperatorOrNumber("-")}} title="-"/>
+              <Button  style={styles.buttonNumber} onPress={this.onPressOperatorOrNumber} title="4"/>
+              <Button  style={styles.buttonNumber} onPress={this.onPressOperatorOrNumber} title="5"/>
+              <Button  style={styles.buttonNumber} onPress={this.onPressOperatorOrNumber} title="6"/>
+              <Button  style={styles.operation} titleStyle = {styles.titleOperationStyle} onPress={this.onPressOperatorOrNumber} title="-"/>
             </View>
             <View style={styles.row}>
-              <Button  style={styles.buttonNumber} onPress={()=>{this.onPressOperatorOrNumber("7")}} title="7"/>
-              <Button  style={styles.buttonNumber} onPress={()=>{this.onPressOperatorOrNumber("8")}} title="8"/>
-              <Button  style={styles.buttonNumber} onPress={()=>{this.onPressOperatorOrNumber("9")}} title="9"/>
-              <Button  style={styles.operation} titleStyle = {{color:'white'}} onPress={()=>{this.onPressOperatorOrNumber("+")}} title="+"/>
+              <Button  style={styles.buttonNumber} onPress={this.onPressOperatorOrNumber} title="7"/>
+              <Button  style={styles.buttonNumber} onPress={this.onPressOperatorOrNumber} title="8"/>
+              <Button  style={styles.buttonNumber} onPress={this.onPressOperatorOrNumber} title="9"/>
+              <Button  style={styles.operation} titleStyle = {styles.titleOperationStyle} onPress={this.onPressOperatorOrNumber} title="+"/>
             </View>
             <View style={styles.row}>
-              <Button  style={styles.buttonNumber} onPress={()=>{this.onPressOperatorOrNumber("0")}} title="0"/>
-              <Button  style={styles.buttonNumber} onPress={()=>{this.onPressOperatorOrNumber("00")}} title="00"/>
-              <Button  style={styles.buttonNumber} onPress={()=>{this.onPressOperatorOrNumber(".")}} title="."/>
-              <Button  style={[styles.buttonNumber,{backgroundColor:'#4aa7ff'}]} titleStyle = {{color:'white'}} onPress={this.onPressSubmitResult} title="="/>
+              <Button  style={styles.buttonNumber} onPress={this.onPressOperatorOrNumber} title="0"/>
+              <Button  style={styles.buttonNumber} onPress={this.onPressOperatorOrNumber} title="00"/>
+              <Button  style={styles.buttonNumber} onPress={this.onPressOperatorOrNumber} title="."/>
+              <Button  style={styles.equalButton} titleStyle = {styles.titleOperationStyle} onPress={this.onPressSubmitResult} title="="/>
             </View>
           </View>
         </View>
@@ -92,6 +96,11 @@ const styles =StyleSheet.create({
   component:{
     flex:1,
     flexDirection:'column'
+  },
+  ACbutton:{
+    flex:3,
+    backgroundColor:'#2b79c2',
+    height:75,
   },
   buttonNumber:{
     flex:1,
@@ -112,14 +121,27 @@ const styles =StyleSheet.create({
     fontSize:30,
     marginRight:16
   },
+  iconStyle:{
+    color:'white',
+    marginLeft:16,
+  },
+
   resultText:{
     color:'white',
     textAlign :'right',
     fontSize:60,
     marginRight:16
   },
+  titleOperationStyle:{
+    color:'white',
+  },
   row:{
     flexDirection:'row',
     justifyContent: 'space-around'
+  },
+  equalButton:{
+    backgroundColor:'#4aa7ff',
+    flex:1,
+    height:75,
   }
 })
