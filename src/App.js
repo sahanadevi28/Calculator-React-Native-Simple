@@ -28,7 +28,7 @@ export default class App extends React.PureComponent {
   onPressSubmitResult=()=>{
     try{
       this.setState({
-        result:eval(this.state.formula)
+        result:eval(this.state.formula)||0
       })
     }catch(e){
       alert("Input wrong.")
@@ -47,7 +47,7 @@ export default class App extends React.PureComponent {
         <View style={{flex:1}}>
           <View style={{backgroundColor:'#282828',height:130}}>
             <View style={{flex:1,justifyContent:'center'}}>
-                <Text style={styles.resultText}>
+                <Text style={[styles.resultText,{fontSize:(60-(this.state.result.toString().length))}]}>
                   {this.state.result}
                 </Text>
             </View>
