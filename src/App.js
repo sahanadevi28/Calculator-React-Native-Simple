@@ -18,6 +18,9 @@ export default class App extends React.PureComponent {
     this.onPressOperatorOrNumber = this.onPressOperatorOrNumber.bind(this)
   }
   onPressOperatorOrNumber=(symbol)=>{
+    if(symbol==="X"){
+      symbol="*";
+    }
     this.setState({
       formula:this.state.formula+symbol
     })
