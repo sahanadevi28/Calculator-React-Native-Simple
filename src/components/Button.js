@@ -6,7 +6,6 @@ import {
   View,
   TouchableHighlight,
 } from 'react-native';
-import shallowCompare from 'react-addons-shallow-compare';
 
 export default class Button extends React.PureComponent {
   constructor(props) {
